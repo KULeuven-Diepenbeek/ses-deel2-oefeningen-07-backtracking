@@ -14,8 +14,32 @@ public class Oef08 {
         private final Set<Position> walls = new HashSet<>();
 
         public List<Position> shortestPath() {
-            // TODO
-            return null;
+            return findShortestPath(new ArrayList<>(List.of(start)), null);
+        }
+
+        private List<Position> findShortestPath(List<Position> pathSoFar, List<Position> bestSoFar) {
+            if (finishPositions.contains(pathSoFar.getLast())) {
+                if (bestSoFar == null || pathSoFar.size() < bestSoFar.size())
+                    return List.copyOf(pathSoFar);
+                return bestSoFar;
+            }
+
+            var minDistanceToSomeFinish = finishPositions.stream().mapToInt(f -> manhattanDistance(pathSoFar.getLast(), f)).min().getAsInt();
+            if (bestSoFar != null && pathSoFar.size() + minDistanceToSomeFinish >= bestSoFar.size()) return bestSoFar;
+
+            for (var next : neighbors(pathSoFar.getLast())) {
+                if (!pathSoFar.contains(next) && !hasWallAt(next)) {
+                    pathSoFar.add(next);
+                    bestSoFar = findShortestPath(pathSoFar, bestSoFar);
+                    pathSoFar.removeLast();
+                }
+            }
+
+            return bestSoFar;
+        }
+
+        private int manhattanDistance(Position from, Position to) {
+            return Math.abs(from.row() - to.row()) + Math.abs(from.col() - to.col());
         }
 
         private Collection<Position> neighbors(Position pos) {

@@ -1,6 +1,8 @@
 package oef09_handdoeken;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class Oef09 {
@@ -21,14 +23,47 @@ public class Oef09 {
         }
 
         public long nbPossibleDesigns() {
-            // TODO
-            return -1;
+            return designs.stream().filter(this::isPossible).count();
         }
 
         public long countDifferentRealizations(String design) {
-            // TODO
-            return -1;
+            return countDifferentRealizations(design, new HashMap<>());
         }
 
+        private long countDifferentRealizations(String design, Map<String, Long> cache) {
+            if (design.isEmpty()) return 1;
+            if (cache.containsKey(design)) return cache.get(design);
+
+            var total = 0L;
+            for (var pattern : patterns) {
+                if (design.startsWith(pattern)) {
+                    total += countDifferentRealizations(design.substring(pattern.length()), cache);
+                }
+            }
+
+            cache.put(design, total);
+            return total;
+        }
+
+        private boolean isPossible(String design) {
+            return isPossible(design, new HashMap<>());
+        }
+
+        private boolean isPossible(String design, Map<String, Boolean> cache) {
+            if (design.isEmpty()) return true;
+            if (cache.containsKey(design)) return cache.get(design);
+
+            for (var pattern : patterns) {
+                if (design.startsWith(pattern)) {
+                    if (isPossible(design.substring(pattern.length()), cache)) {
+                        cache.put(design, true);
+                        return true;
+                    }
+                }
+            }
+
+            cache.put(design, false);
+            return false;
+        }
     }
 }

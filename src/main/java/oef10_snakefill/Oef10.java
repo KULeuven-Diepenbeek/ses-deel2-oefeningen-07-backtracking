@@ -222,8 +222,31 @@ public class Oef10 {
 
 
     public static List<Direction> solve(Board board) {
-        // TODO
-        return null;
+        return solve(board, new ArrayList<>(), null);
+    }
+
+    private static List<Direction> solve(Board board, List<Direction> solutionSoFar, List<Direction> bestSolution) {
+        if (board.isFull()) {
+            if (bestSolution == null || solutionSoFar.size() < bestSolution.size()) {
+                return List.copyOf(solutionSoFar);
+            } else {
+                return bestSolution;
+            }
+        }
+
+        if (bestSolution != null && solutionSoFar.size() >= bestSolution.size()) return bestSolution;
+
+        for (var dir : Direction.ALL_DIRECTIONS) {
+            int n = board.freeCells(dir);
+            if (n > 0) {
+                board.extendSnake(n, dir);
+                solutionSoFar.add(dir);
+                bestSolution = solve(board, solutionSoFar, bestSolution);
+                board.retractSnake(n, dir);
+            }
+        }
+
+        return bestSolution;
     }
 
 }
