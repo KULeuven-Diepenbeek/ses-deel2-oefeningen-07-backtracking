@@ -61,44 +61,44 @@ public class Oef06Test {
     class LangsteSamentrekking {
         @Test
         public void lege_invoer() {
-            var result = Oef06.langsteeSamentrekking(List.of());
+            var result = Oef06.langsteSamentrekking(List.of());
             assertThat(result).isEqualTo("");
         }
 
         @Test
         public void slechts_een_woord() {
-            var result = Oef06.langsteeSamentrekking(List.of("hallo"));
+            var result = Oef06.langsteSamentrekking(List.of("hallo"));
             assertThat(result).isEqualTo("hallo");
         }
 
         @Test
         public void identieke_woorden() {
-            var result = Oef06.langsteeSamentrekking(List.of("hallo", "hallo"));
+            var result = Oef06.langsteSamentrekking(List.of("hallo", "hallo"));
             assertThat(result).isEqualTo("hallo");
         }
 
 
         @Test
         public void voorbeeld1() {
-            var result = Oef06.langsteeSamentrekking(List.of("banaan", "ananas"));
+            var result = Oef06.langsteSamentrekking(List.of("banaan", "ananas"));
             assertThat(result).isEqualTo("banaananas");
         }
 
         @Test
         public void voorbeeld2() {
-            var result = Oef06.langsteeSamentrekking(List.of("besturend", "declaratiesysteem", "deelgemeente", "gemeentebesturen", "merendeel", "programmeren", "sturende", "urendeclaraties"));
+            var result = Oef06.langsteSamentrekking(List.of("besturend", "declaratiesysteem", "deelgemeente", "gemeentebesturen", "merendeel", "programmeren", "sturende", "urendeclaraties"));
             assertThat(result).isEqualTo("programmerendeelgemeentebesturendeclaratiesturendeclaratiesysteem");
         }
 
         @Test
         public void voorbeeld3() {
-            var result = Oef06.langsteeSamentrekking(List.of("samentrekking", "trekkingsdata", "datavoorziening", "voorzieningsfonds", "fondsmanager", "managersfuncties", "functiesysteem", "systeemdata"));
+            var result = Oef06.langsteSamentrekking(List.of("samentrekking", "trekkingsdata", "datavoorziening", "voorzieningsfonds", "fondsmanager", "managersfuncties", "functiesysteem", "systeemdata"));
             assertThat(result).isEqualTo("functiesysteemdatavoorzieningsfondsmanagersfunctiesamentrekkingsdata");
         }
 
         @Test
         public void greedy_oplossing_fout() {
-            var result = Oef06.langsteeSamentrekking(List.of("abcd", "bcda"));
+            var result = Oef06.langsteSamentrekking(List.of("abcd", "bcda"));
             assertThat(result).hasSize(7);
         }
 

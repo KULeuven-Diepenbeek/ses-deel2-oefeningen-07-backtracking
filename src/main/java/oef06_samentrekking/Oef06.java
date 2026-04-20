@@ -9,7 +9,7 @@ public class Oef06 {
         return null;
     }
 
-    public static String langsteeSamentrekking(List<String> woorden) {
+    public static String langsteSamentrekking(List<String> woorden) {
         // TODO
         return null;
     }
